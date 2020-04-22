@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: springdevops
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: springdevops
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: springdeploy
+spec:
+  selector:
+    matchLabels:
+      app: springdevops
+  replicas: 1
+  minReadySeconds: 15
+  strategy:
+    type: RollingUpdate
+    rollingUpdate: 
+      maxUnavailable: 1
+      maxSurge: 1 
+  template:
+    metadata:
+      labels:
+        app: springdevops
+    spec:
+      containers:
+      - image: surajsnair23/springsn:latest
+        imagePullPolicy: Always
+        name: springdevops
+        ports:
+          - containerPort: 8080
+
+

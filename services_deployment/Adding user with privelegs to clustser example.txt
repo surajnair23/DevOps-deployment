@@ -1,0 +1,23 @@
+***You need to create a User with EKS priveleges in IAM and need to add the user in UserMap to the config_auth
+When you apply this file, kubectl apply -f config-map-aws-auth.yaml it will give them priveleges
+
+*********Auto generated part
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: aws-auth
+  namespace: kube-system
+data:
+  mapRoles: |
+    - rolearn: arn:aws:iam::013144320478:role/terraform-eks-demo-node
+      username: system:node:{{EC2PrivateDNSName}}
+      groups:
+        - system:bootstrappers
+        - system:nodes
+***********************new user map
+  mapUsers: | 
+    - userarn: arn:aws:iam::<>\zed
+      username: zed
+      groups: 
+        - system:masters
+

@@ -1,0 +1,60 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysqldevops
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 3306
+    protocol: TCP
+    targetPort: 3306
+  selector:
+    app: mysqldevops
+
+---
+
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: mysqldeploy
+spec:
+  selector:
+    matchLabels:
+      app: mysqldevops
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mysqldevops
+    spec:
+      containers:
+      - image: mysql/mysql-server:latest
+        name: mysqldevops
+        env:
+
+        - name: "MYSQL_USER"
+
+          value: "suraj"
+
+        - name: "MYSQL_PASSWORD"
+
+          value: "1234"
+
+        - name: "MYSQL_DATABASE"
+
+          value: "music"
+
+        - name: "MYSQL_ROOT_PASSWORD"
+
+          value: "1234"
+        ports:
+        - containerPort: 3306
+          name: mysqldevops
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: mysql-pv-claim
