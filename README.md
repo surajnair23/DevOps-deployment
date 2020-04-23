@@ -6,6 +6,10 @@ Deployment scripts to recreate a microservices application to recommend playlist
 The deployment scripts would create 2 worker nodes within EKS cluster.
 All routing is managed internally by Service Names, so no IP's needs to be edited(exception Admin app, see further details)
 
+## Dependancies
+
+We need [Terraform](https://www.terraform.io/downloads.html), [Docker](https://docs.docker.com/get-docker/) for running the deployment.
+
 ## Initial set up
 Keep you Docker up and running
 Clone the project, and step into the infra_deployment
