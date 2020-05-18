@@ -1,4 +1,4 @@
-# DevOps-deployment
+# FindYourVibe-deployment
 Deployment scripts to recreate a microservices application to recommend playlist
 
 ```Deployment Scripts for running project ```
