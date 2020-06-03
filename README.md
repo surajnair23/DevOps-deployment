@@ -1,15 +1,19 @@
 # FindYourVibe-deployment
-Deployment scripts to recreate a microservices application to recommend playlist
+Deployment scripts to recreate a microservices application to recommend playlist to users based on ratings provided to [Billboard's Top100 weekly](https://www.billboard.com/charts/hot-100) scrapped using [BeautifulSoup](https://pypi.org/project/beautifulsoup4/) and recommendaion provided using [Apache Mahout](https://mahout.apache.org/) clustering.
 
-```Deployment Scripts for running project ```
+It could also suggest playlist to users based on their mood using Sentiment Analysis from [TextBlob polarity](https://textblob.readthedocs.io/en/dev/quickstart.html)
 
-The deployment scripts would create 2 worker nodes within EKS cluster.
+Other features include email on user registration using [SMTP](https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol) and Bug reporting in [Slack Incoming Webhooks](https://api.slack.com/messaging/webhooks)
+
+## Scope ##
+The deployment scripts would create 2 worker nodes within [AWS EKS](https://aws.amazon.com/eks/) cluster automated using [Terraform](https://www.terraform.io/docs/providers/aws/index.html) scripts.
 All routing is managed internally by Service Names, so no IP's needs to be edited(exception Admin app, see further details)
+We have Spring Boot(Load Balancer), Python(Node Port), MySQL(Load Balancer), MongoDB(Load Balancer) backend containers and React, .NETCore front end containers.
 
 ## Dependancies
 
 We need [Terraform](https://www.terraform.io/downloads.html), [Docker](https://docs.docker.com/get-docker/) for running the deployment.
-
+## Deployment Scripts for running project ##
 ## Initial set up
 Keep you Docker up and running
 Clone the project, and step into the infra_deployment
@@ -20,7 +24,7 @@ terraform apply
 ```
 This will give an output for config file and config-map-aws-auth
 
-Replace local C://User/sura/.kube/config file with this config
+Replace local C://<>/.kube/config file with this config
 
 Copy the config-map-aws-auth into a YAML file and run the following command
 
@@ -54,7 +58,7 @@ Step into local Admin app, and follow the below steps to edit JS file with sprin
 This is the only manual step where our JavaScript file could not resolve service names
 ```bash
 delete out and publish folders
-cd D:\Courseware\MIS at NEU\<>\dotnetAdmin\adminApp\wwwroot\js
+cd D:\<>\dotnetAdmin\adminApp\wwwroot\js
 EDIT the file, with spring-boot IP as generated check 'kubectl get svc'
 dotnet build
 dotnet publish -o out
@@ -67,7 +71,7 @@ kubectl apply -f dotnet-app.yml
 
 ## Final set up for Grapfana and Promethues
 Step into monitoring
-cd D:\Courseware\MIS at NEU\DevOps\<>\DeploymentEKS\services_deployment\monitoring
+cd D:\<>\DeploymentEKS\services_deployment\monitoring
 
 Run the following commands
 ```bash
